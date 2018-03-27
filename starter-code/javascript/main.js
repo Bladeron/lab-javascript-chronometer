@@ -7,7 +7,7 @@ var secDec      = document.getElementById('secDec');
 var secUni      = document.getElementById('secUni');
 var milDec      = document.getElementById('milDec');
 var milUni      = document.getElementById('milUni');
-
+var splitTime = document.getElementById("splits");
 
 function printTime() {
   printMinutes();
@@ -39,19 +39,26 @@ function clearSplits() {
 function setStopBtn() {
   document.getElementById("btnLeft").setAttribute("class","btn start");
   document.getElementById("btnLeft").innerText="START";
+  document.getElementById("btnRight").setAttribute("class","btn reset");
+  document.getElementById("btnRight").innerText = "RESET";
   chronometer.stopClick();
 
 }
 
 function setSplitBtn() {
-  document.getElementById("btnRight").setAttribute("class","btn split");
-  document.getElementById("btnRight").innerText = "SPLIT";
+ var newLi = document.createElement("li");
+ var contenido = document.createTextNode (minDec.textContent + minUni.textContent + ":" +secDec.textContent + secUni.textContent);
+ newLi.appendChild(contenido);
+ splitTime.appendChild(newLi);
+
 }
 
 function setStartBtn() {
   document.getElementById("btnLeft").setAttribute("class","btn stop");
   document.getElementById("btnLeft").innerText = "STOP";
-  setSplitBtn();  
+  document.getElementById("btnRight").setAttribute("class","btn split");
+  document.getElementById("btnRight").innerText = "SPLIT";
+
   chronometer.startClick();
   
   setInterval(function() {
@@ -60,8 +67,7 @@ function setStartBtn() {
 }
 
 function setResetBtn() {
-  document.getElementById("btnRight").setAttribute("class","btn reset");
-  document.getElementById("btnRight").innerText = "RESET";
+  
   chronometer.resetClick();
 
 }
@@ -81,10 +87,10 @@ btnLeft.addEventListener('click', function () {
 
 // Reset/Split Button
 btnRight.addEventListener('click', function () {
-  if (document.getElementById("btnRight").innerText == "RESET") {
+  if (document.getElementById("btnRight").innerText == "SPLIT") {
     setSplitBtn();
   } 
-  else if (document.getElementById("btnRight").innerText == "SPLIT") {
-    setResetBtn();
+  else if (document.getElementById("btnRight").innerText == "RESET") {
+  setResetBtn();
   }
 });
